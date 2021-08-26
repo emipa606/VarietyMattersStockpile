@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ModMetaData>
+  <name>Variety Matters Stockpile (Continued)</name>
+  <packageId>Mlie.VarietyMattersStockpile</packageId>
+  <author>Cozarkian</author>
+  <url>https://github.com/emipa606/VarietyMattersStockpile</url>
+  <supportedVersions>
+    <li>1.2</li>
+    <li>1.3</li>
+  </supportedVersions>
+  <modDependencies>
+    <li>
+      <packageId>brrainz.harmony</packageId>
+      <displayName>Harmony</displayName>
+      <steamWorkshopUrl>steam://url/CommunityFilePage/2009463077</steamWorkshopUrl>
+      <downloadUrl>https://github.com/pardeike/HarmonyRimWorld/releases/latest</downloadUrl>
+    </li>
+  </modDependencies>
+  <loadAfter>
+    <li>brrainz.harmony</li>
+  </loadAfter>
+  <description>[img]https://i.imgur.com/WAEzk68.png[/img]
+Update of Cozarkians mod
+https://steamcommunity.com/sharedfiles/filedetails/?id=2266068546
+
+[img]https://i.imgur.com/7Gzt3Rg.png[/img]
+
+[table]
+    [tr]
+        [td][url=https://invite.gg/Mlie][img]https://i.imgur.com/zdzzBrc.png[/img][/url][/td]
+        [td][url=https://github.com/emipa606/VarietyMattersStockpile][img]https://i.imgur.com/kTkpTOE.png[/img][/url][/td]
+    [/tr]
+[/table]
+	
+[img]https://i.imgur.com/NOW7jU1.png[/img]
+[h1]Overview[/h1]
+Adds several new features to stockpile filters for added control over what to store, how much to store, and when to fill a stockpile. 
+
+Created for use with [url=https://steamcommunity.com/sharedfiles/filedetails/?id=2207657844]Variety Matters[/url], you can now create a stockpile near your cook that will hold small stacks of different ingredients, increasing the diversity of ingredients used in meals. 
+
+For vanilla uses, you can create a food shelf in your dining room that won't refill until the shelves are empty, saving hauling time and helping meals get eaten before they rot; or give your pawns' closets with only 1 of each type of clothing. 
+
+[h1]Mod Features[/h1]
+[b]Limit Duplicate Stacks:[/b] Limit the number of stacks of the same item that can be stored in a stockpile. For example, with a duplicate limit of 2, pawns will never store more than 2 stacks of corn, no matter how large the stockpile. 
+
+There is an option to treat items with a stack size of 1 as duplicates if they have the same def name, allowing for the creation of closets/armories with a variety of clothing/armor.
+
+[b]Limit Stack Size:[/b]: Set a limit to reduce stack sizes.The limit will only reduce stack sizes, not increase them. Useful to divide limited supplies of medicine among multiple stockpiles.
+
+[b]Limit Refilling[/b]: Set a limit for how empty a stockpile must be before pawns will start refilling. Move the slider all the way to the right for vanilla behavior. Move it to the left and pawns will stop refilling any stacks until a certain number of cells are empty. Once pawns start refilling, they will keep filling the stockpile until full.
+
+Stockpiles will automatically start filling when created or enlarged. There is a toggle to start/stop refilling that appears when appropriate. If you toggle off a completely empty stockpile, it will disable the stockpile until manually restarted.
+
+[h1]Compatibility / Mod Interaction[/h1]
+
+[b]Project Rim Factory:[/b] No known errors. Doesn't work with hoppers.
+
+[b]LWM Deep Storage:[/b]
+[list]
+[*]Duplicate Limit: Works to limit stacks up to 1 per cell. Trying to set a duplicate limit greater than 1 per cell will be treated as 1 per cell.
+		
+[*]Stack Size Limit: Updated to work properly.
+		
+[*]Refill Limit: Recommended to keep set to always fill. Moving the slider works, but will substantially reduce the usefulness of deep storage.
+
+[/list]		
+
+[b]Ogre Stack:[/b] No known issues.
+		
+[b]Satisfied Storage (e.g. Storage Hysteresis):[/b] Must be loaded before this mod. Satisfied Storage will not consider reduced stack sizes when determining whether to refill a cell.
+	
+[b]Jobs of Opportunity:[/b] No known issues.
+	
+[b]Pick Up and Haul:[/b] Not tested after update. Prior to update, had an amusing bug with the stack size feature, but other features worked fine.
+	
+[b]Stockpile Ranking:[/b] No known errors. Duplicate limit feature will prevent lower-ranked items from being placed in stockpile if there are items of a higher rank that aren't in any stockpile.
+	
+[b]Stockpile Stack Limit:[/b] Not compatible (feature was incorporated with modification).
+	
+[b]Other Storage Mods:[/b] Not tested.
+	
+[h1]Known Issues:[/h1]
+
+Pawns ignore the stack limit when placing stacks from a recently completed bill, requiring follow-up hauling jobs to remove the excess. Can be avoided by setting bills to drop on the floor or to deliver to a non-limited stockpile.
+	
+[h1]Credits:[/h1]
+	This mod borrows heavily from the Storage Stack Limit and Storage Hysteresis mods.
+	[url=https://steamcommunity.com/sharedfiles/filedetails/?id=2015532615&amp;searchtext=stack+limit]Sellophane's Remade and Updated Stockpile Stack Limit[/url]
+	[url=https://steamcommunity.com/sharedfiles/filedetails/?id=1852323982]Darksider's Version[/url] 
+	[url=https://steamcommunity.com/sharedfiles/filedetails/?id=1651076103]Original Stack Limit[/url]
+	[url=https://steamcommunity.com/sharedfiles/filedetails/?id=726479594&amp;searchtext=rimworld+search]RimWorld Search Agency[/url]
+	[url=https://steamcommunity.com/sharedfiles/filedetails/?id=2003354028]Satisfied Storage[/url]	[url=https://steamcommunity.com/sharedfiles/filedetails/?id=784324350&amp;searchtext=Hysteresis]Original Storage Hysteresis[/url]
+
+[img]https://i.imgur.com/Rs6T6cr.png[/img]
+[list]
+[*] See if the the error persists if you just have this mod and its requirements active.
+[*] If not, try adding your other mods until it happens again.
+[*] Post your error-log using [url=https://steamcommunity.com/workshop/filedetails/?id=818773962]HugsLib[/url] and command Ctrl+F12
+[*] For best support, please use the Discord-channel for error-reporting.
+[*] Do not report errors by making a discussion-thread, I get no notification of that.
+[*] If you have the solution for a problem, please post it to the GitHub repository.
+[/list]
+</description>
+</ModMetaData>
+

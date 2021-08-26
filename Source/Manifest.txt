@@ -1,0 +1,52 @@
+[h1]Overview[/h1]
+Adds several new features to stockpile filters for added control over what to store, how much to store, and when to fill a stockpile. 
+
+Created for use with [url=https://steamcommunity.com/sharedfiles/filedetails/?id=2207657844]Variety Matters[/url], you can now create a stockpile near your cook that will hold small stacks of different ingredients, increasing the diversity of ingredients used in meals. 
+
+For vanilla uses, you can create a food shelf in your dining room that won't refill until the shelves are empty, saving hauling time and helping meals get eaten before they rot; or give your pawns' closets with only 1 of each type of clothing. 
+
+[h1]Mod Features[/h1]
+[b]Limit Duplicate Stacks:[/b] Limit the number of stacks of the same item that can be stored in a stockpile. For example, with a duplicate limit of 2, pawns will never store more than 2 stacks of corn, no matter how large the stockpile. 
+
+Stackable items are dupilcates if stackable. Items with a stack limit of 1 are duplicates if they have the same def name.
+
+[b]Limit Stack Size:[/b]: Set a limit to reduce stack sizes.The limit will only reduce stack sizes, not increase them. 
+
+[b]Limit Refilling[/b]: Set a limit for how empty a stockpile must be before pawns will start refilling. Move the slider all the way to the right for vanilla behavior. Move it to the left and pawns will stop refilling any stacks until a certain number of cells are empty. Once pawns start refilling, they will keep filling the stockpile until all cells have a storable item.
+
+Stockpiles will automatically start filling when created or enlarged. There is a toggle to start/stop refilling that appears when appropriate. If you toggle off a completely empty stockpile, it will disable the stockpile until manually restarted.
+
+[h1]Compatability / Mod Interaction[/h1]
+	Based on limited testing:
+
+	[b]LWM Deep Storage:[/b]
+		Duplicate Limit: All stacks in the same cell are treated as one. A 2-cell building that holds 8 total stacks (4 per cell) with a duplicate limit of 1 will hold up to 4 stacks of the same item in 1 cell.
+		
+		Stack Size Limit: All stacks in the same cell count toward the limit. A 2-cell building that holds 8 total stacks with a stack size limit of 100 can hold up to 200 of the same item (100 per cell).
+		
+		Refill Limit: Recommended to keep slider all the way to the right (always fill). Otherwise, pawns will stop filling as soon as all cells have at least 1 stack. Other issues may also occur if the slider is moved to the left.
+		
+	[b]Ogre Stack:[/b] Appears to work fine.
+		
+	[b]RSA/Satisfied Storage (e.g. Storage Hysteresis):[/b] I had no errors in testing. However, when combined with the stack limit feature, the hysteresis refill percentage is based on the default stack size, not the modified stack size.
+	
+	[b]Jobs of Opportunity:[/b] Appears to work fine.
+	
+	[b]Pick Up and Haul:[/b] The duplicate/refill features are compatible. The stack size feature is not. Unless you enjoy torturing pawns, in which case you can set a stack size limit and watch them run around trying to simultaneously fill stacks to vanilla defaults and removing excess from overfilled stacks.
+	
+	[b]Stockpile Ranking:[/b] Stack limit and refill features are compatible. Setting a duplicate limit is partially compatible. If there are unstored items in a higher rank, the stockpile will not look for lower rank items.
+	
+	[b]Stockpile Stack Limit:[/b] Not compatible (feature was incorporated with modification).
+	
+	[b]Other Storage Mods:[/b] Not tested.
+	
+[h1]Known Issues:[/h1]
+	On rare occasions, pawns may over-fill a size-limited stack, requiring a second-job to remove the excess (assuming there is another stockpile available). This is caused by the change to stack size limited that allows pawns to carry multiple stacks. There is a setting "Avoid overfill" to correct this issue, but it will disable the ability of pawns to carry multiple stacks to size-limited stockpiles, resulting in a net loss of hauling efficiency.
+	
+[h1]Credits:[/h1]
+	This mod borrows heavily from the Storage Stack Limit and Storage Hysteresis mods.
+	[url=https://steamcommunity.com/sharedfiles/filedetails/?id=2015532615&searchtext=stack+limit]Sellophane's Remade and Updated Stockpile Stack Limit[/url]
+	[url=https://steamcommunity.com/sharedfiles/filedetails/?id=1852323982]Darksider's Version[/url] 
+	[url=https://steamcommunity.com/sharedfiles/filedetails/?id=1651076103]Original Stack Limit[/url]
+	[url=https://steamcommunity.com/sharedfiles/filedetails/?id=726479594&searchtext=rimworld+search]RimWorld Search Agency[/url]
+	[url=https://steamcommunity.com/sharedfiles/filedetails/?id=2003354028]Satisfied Storage[/url]	[url=https://steamcommunity.com/sharedfiles/filedetails/?id=784324350&searchtext=Hysteresis]Original Storage Hysteresis[/url]
