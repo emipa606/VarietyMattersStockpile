@@ -1,4 +1,7 @@
 # Changelog for VarietyMattersStockpile
 
+1.3.1 - Excludes 1-cell stockpiles from refill settings as it did not make sense. Opened all strings for translation
+
+
 1.0.0.0 - First publish
 

@@ -1,14 +1,14 @@
 # VarietyMattersStockpile
 
-![Image](https://i.imgur.com/WAEzk68.png)
+![Image](https://i.imgur.com/buuPQel.png)
 
 Update of Cozarkians mod
 https://steamcommunity.com/sharedfiles/filedetails/?id=2266068546
 
-![Image](https://i.imgur.com/7Gzt3Rg.png)
+![Image](https://i.imgur.com/pufA0kM.png)
 
 	
-![Image](https://i.imgur.com/NOW7jU1.png)
+![Image](https://i.imgur.com/Z4GOv8H.png)
 
 # Overview
 
@@ -69,13 +69,13 @@ Pawns ignore the stack limit when placing stacks from a recently completed bill,
 # Credits:
 
 	This mod borrows heavily from the Storage Stack Limit and Storage Hysteresis mods.
-	https://steamcommunity.com/sharedfiles/filedetails/?id=2015532615&amp;searchtext=stack+limit]Sellophane's Remade and Updated Stockpile Stack Limit
+	https://steamcommunity.com/sharedfiles/filedetails/?id=2015532615]Sellophane's Remade and Updated Stockpile Stack Limit
 	https://steamcommunity.com/sharedfiles/filedetails/?id=1852323982]Darksider's Version 
 	https://steamcommunity.com/sharedfiles/filedetails/?id=1651076103]Original Stack Limit
-	https://steamcommunity.com/sharedfiles/filedetails/?id=726479594&amp;searchtext=rimworld+search]RimWorld Search Agency
-	https://steamcommunity.com/sharedfiles/filedetails/?id=2003354028]Satisfied Storage	https://steamcommunity.com/sharedfiles/filedetails/?id=784324350&amp;searchtext=Hysteresis]Original Storage Hysteresis
+	https://steamcommunity.com/sharedfiles/filedetails/?id=726479594]RimWorld Search Agency
+	https://steamcommunity.com/sharedfiles/filedetails/?id=2003354028]Satisfied Storage	https://steamcommunity.com/sharedfiles/filedetails/?id=784324350]Original Storage Hysteresis
 
-![Image](https://i.imgur.com/Rs6T6cr.png)
+![Image](https://i.imgur.com/PwoNOj4.png)
 
 
 

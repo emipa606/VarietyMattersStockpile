@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+  <VMS.NoEffect>1 cell storage will always be filled</VMS.NoEffect>
+  <VMS.FullyStocked>Always keep fully stocked</VMS.FullyStocked>
+  <VMS.StartAtOne>Start refilling when 1 space is available</VMS.StartAtOne>
+  <VMS.RefillWhenEmpty>Start refilling when empty</VMS.RefillWhenEmpty>
+  <VMS.RefillWhenAmount>Start refilling when {0} spaces are available</VMS.RefillWhenAmount>
+  <VMS.FillNow>Fill now</VMS.FillNow>
+  <VMS.StackSize>Stack size</VMS.StackSize>
+  <VMS.Duplicates>Duplicates</VMS.Duplicates>
+  <VMS.SingleDuplicates>Single-stack items can be duplicates: </VMS.SingleDuplicates>
+  <VMS.CheckReservations>Check reservations when limiting duplicates: </VMS.CheckReservations>
+</LanguageData>

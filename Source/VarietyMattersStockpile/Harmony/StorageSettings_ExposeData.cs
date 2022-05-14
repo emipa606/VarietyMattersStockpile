@@ -2,20 +2,19 @@
 using RimWorld;
 using Verse;
 
-namespace VarietyMattersStockpile
+namespace VarietyMattersStockpile;
+
+[HarmonyPatch(typeof(StorageSettings), nameof(StorageSettings.ExposeData))]
+public class StorageSettings_ExposeData
 {
-    [HarmonyPatch(typeof(StorageSettings), nameof(StorageSettings.ExposeData))]
-    public class StorageSettings_ExposeData
+    [HarmonyPostfix]
+    public static void ExposeData(StorageSettings __instance)
     {
-        [HarmonyPostfix]
-        public static void ExposeData(StorageSettings __instance)
+        var storageLimits = StorageLimits.GetLimitSettings(__instance);
+        Scribe_Deep.Look(ref storageLimits, "limitSettings");
+        if (storageLimits != null)
         {
-            var storageLimits = StorageLimits.GetLimitSettings(__instance);
-            Scribe_Deep.Look(ref storageLimits, "limitSettings");
-            if (storageLimits != null)
-            {
-                StorageLimits.SetLimitSettings(__instance, storageLimits);
-            }
+            StorageLimits.SetLimitSettings(__instance, storageLimits);
         }
     }
 }

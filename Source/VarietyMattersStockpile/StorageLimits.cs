@@ -2,128 +2,127 @@
 using RimWorld;
 using Verse;
 
-namespace VarietyMattersStockpile
+namespace VarietyMattersStockpile;
+
+public class StorageLimits : IExposable
 {
-    public class StorageLimits : IExposable
+    private static readonly Dictionary<StorageSettings, StorageLimits> limitSettings =
+        new Dictionary<StorageSettings, StorageLimits>();
+
+    public float cellFillPercentage = 1f;
+    public float cellsFilled = -1f;
+    public int dupStackLimit = -1;
+    public bool needsFilled = true;
+    public int stackSizeLimit = -1;
+
+    public void ExposeData()
     {
-        private static readonly Dictionary<StorageSettings, StorageLimits> limitSettings =
-            new Dictionary<StorageSettings, StorageLimits>();
+        Scribe_Values.Look(ref dupStackLimit, "duplicatesLimit", -1);
+        Scribe_Values.Look(ref stackSizeLimit, "stackSizeLimit", -1);
+        Scribe_Values.Look(ref cellFillPercentage, "cellfillPercentage", 1f);
+        Scribe_Values.Look(ref needsFilled, "needsFilled", true);
+        Scribe_Values.Look(ref cellsFilled, "cellsFilled", -1f);
+        //Scribe_Values.Look<int>(ref this.extraTrips, "extraStacks", 0, false);
+    }
 
-        public float cellFillPercentage = 1f;
-        public float cellsFilled = -1f;
-        public int dupStackLimit = -1;
-        public bool needsFilled = true;
-        public int stackSizeLimit = -1;
+    //public static  bool deepStorageActive = false;
+    //public int extraTrips = 0;
 
-        public void ExposeData()
+    public static StorageLimits GetLimitSettings(StorageSettings settings)
+    {
+        if (limitSettings.ContainsKey(settings))
         {
-            Scribe_Values.Look(ref dupStackLimit, "duplicatesLimit", -1);
-            Scribe_Values.Look(ref stackSizeLimit, "stackSizeLimit", -1);
-            Scribe_Values.Look(ref cellFillPercentage, "cellfillPercentage", 1f);
-            Scribe_Values.Look(ref needsFilled, "needsFilled", true);
-            Scribe_Values.Look(ref cellsFilled, "cellsFilled", -1f);
-            //Scribe_Values.Look<int>(ref this.extraTrips, "extraStacks", 0, false);
+            return limitSettings[settings];
         }
 
-        //public static  bool deepStorageActive = false;
-        //public int extraTrips = 0;
+        return new StorageLimits();
+    }
 
-        public static StorageLimits GetLimitSettings(StorageSettings settings)
+    public static void SetLimitSettings(StorageSettings settings, StorageLimits newSettings)
+    {
+        if (limitSettings.ContainsKey(settings))
         {
-            if (limitSettings.ContainsKey(settings))
-            {
-                return limitSettings[settings];
-            }
+            limitSettings[settings] = newSettings;
+        }
+        else
+        {
+            limitSettings.Add(settings, newSettings);
+        }
+    }
 
-            return new StorageLimits();
+    public static int CalculateSizeLimit(Thing t)
+    {
+        if (!t.Spawned)
+        {
+            return t.def.stackLimit;
         }
 
-        public static void SetLimitSettings(StorageSettings settings, StorageLimits newSettings)
+        var slotgroup = t.Map.haulDestinationManager.SlotGroupAt(t.Position); //t.GetSlotGroup();
+        if (slotgroup == null)
         {
-            if (limitSettings.ContainsKey(settings))
-            {
-                limitSettings[settings] = newSettings;
-            }
-            else
-            {
-                limitSettings.Add(settings, newSettings);
-            }
+            return t.def.stackLimit;
         }
 
-        public static int CalculateSizeLimit(Thing t)
+        var limit = GetLimitSettings(slotgroup.Settings).stackSizeLimit;
+        return limit > 0 && limit < t.def.stackLimit ? limit : t.def.stackLimit;
+    }
+
+    public static int CalculateSizeLimit(SlotGroup slotGroup)
+    {
+        if (slotGroup == null)
         {
-            if (!t.Spawned)
-            {
-                return t.def.stackLimit;
-            }
-
-            var slotgroup = t.Map.haulDestinationManager.SlotGroupAt(t.Position); //t.GetSlotGroup();
-            if (slotgroup == null)
-            {
-                return t.def.stackLimit;
-            }
-
-            var limit = GetLimitSettings(slotgroup.Settings).stackSizeLimit;
-            return limit > 0 && limit < t.def.stackLimit ? limit : t.def.stackLimit;
+            return 99999;
         }
 
-        public static int CalculateSizeLimit(SlotGroup slotGroup)
-        {
-            if (slotGroup == null)
-            {
-                return 99999;
-            }
+        var limit = GetLimitSettings(slotGroup.Settings).stackSizeLimit;
+        return limit > 0 ? limit : 99999;
+    }
 
-            var limit = GetLimitSettings(slotGroup.Settings).stackSizeLimit;
-            return limit > 0 ? limit : 99999;
+    public static void CheckIfFull(SlotGroup slotGroup)
+    {
+        var needsFilled = GetLimitSettings(slotGroup.Settings).needsFilled;
+        if (!needsFilled)
+        {
+            return;
         }
 
-        public static void CheckIfFull(SlotGroup slotGroup)
+        needsFilled = false;
+        var cellsList = slotGroup.CellsList;
+        foreach (var intVec3 in cellsList)
         {
-            var needsFilled = GetLimitSettings(slotGroup.Settings).needsFilled;
-            if (!needsFilled)
+            if (slotGroup.parent.Map.thingGrid.ThingsListAt(intVec3).Any(t => t.def.EverStorable(false)))
             {
-                return;
+                continue;
             }
 
-            needsFilled = false;
-            var cellsList = slotGroup.CellsList;
-            foreach (var intVec3 in cellsList)
-            {
-                if (slotGroup.parent.Map.thingGrid.ThingsListAt(intVec3).Any(t => t.def.EverStorable(false)))
-                {
-                    continue;
-                }
-
-                needsFilled = true;
-                break;
-            }
-
-            if (needsFilled)
-            {
-                return;
-            }
-
-            //Log.Message("Stockpile full, stop stocking");
-            GetLimitSettings(slotGroup.Settings).needsFilled = false;
-            GetLimitSettings(slotGroup.Settings).cellsFilled = cellsList.Count;
+            needsFilled = true;
+            break;
         }
 
-        public static void CheckNeedsFilled(SlotGroup slotGroup, ref bool needsFilled, ref float cellsFilled)
+        if (needsFilled)
         {
-            if (needsFilled)
-            {
-                return;
-            }
+            return;
+        }
 
-            cellsFilled -= 1;
-            float totalCells = slotGroup.CellsList.Count;
-            if (cellsFilled <= 0 ||
-                GetLimitSettings(slotGroup.Settings).cellFillPercentage >= cellsFilled / totalCells)
-            {
-                //Log.Message("Low stock, time to refill");
-                needsFilled = true;
-            }
+        //Log.Message("Stockpile full, stop stocking");
+        GetLimitSettings(slotGroup.Settings).needsFilled = false;
+        GetLimitSettings(slotGroup.Settings).cellsFilled = cellsList.Count;
+    }
+
+    public static void CheckNeedsFilled(SlotGroup slotGroup, ref bool needsFilled, ref float cellsFilled)
+    {
+        if (needsFilled)
+        {
+            return;
+        }
+
+        cellsFilled -= 1;
+        float totalCells = slotGroup.CellsList.Count;
+        if (totalCells == 1 || cellsFilled <= 0 ||
+            GetLimitSettings(slotGroup.Settings).cellFillPercentage >= cellsFilled / totalCells)
+        {
+            //Log.Message("Low stock, time to refill");
+            needsFilled = true;
         }
     }
 }
