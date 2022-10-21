@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <LanguageData>
+  <VMS.CurrentModVersion>Installed mod-version: {0}</VMS.CurrentModVersion>
   <VMS.NoEffect>1 cell storage will always be filled</VMS.NoEffect>
   <VMS.FullyStocked>Always keep fully stocked</VMS.FullyStocked>
   <VMS.StartAtOne>Start refilling when 1 space is available</VMS.StartAtOne>

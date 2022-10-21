@@ -10,12 +10,7 @@ public class TrackLimitSettings
 
     public static StorageLimits GetLimitSettings(StorageSettings settings)
     {
-        if (limitSettings.ContainsKey(settings))
-        {
-            return limitSettings[settings];
-        }
-
-        return new StorageLimits();
+        return limitSettings.ContainsKey(settings) ? limitSettings[settings] : new StorageLimits();
     }
 
     public static void SetLimitSettings(StorageSettings settings, StorageLimits newSettings)

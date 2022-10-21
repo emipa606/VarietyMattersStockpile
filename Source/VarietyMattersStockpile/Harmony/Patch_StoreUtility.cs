@@ -122,7 +122,7 @@ public class Patch_StoreUtility
         foreach (var reservation in allReservations)
         {
             var job = reservation.Job;
-            if (job == null || job.targetA.Thing == null)
+            if (job?.targetA.Thing == null)
             {
                 continue;
             }
