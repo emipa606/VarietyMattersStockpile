@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using RimWorld;
 using Verse;
 
@@ -78,7 +79,7 @@ public class StorageLimits : IExposable
         return limit > 0 ? limit : 99999;
     }
 
-    public static void CheckIfFull(SlotGroup slotGroup)
+    public static void CheckIfFull(SlotGroup slotGroup, Building_Storage storage)
     {
         var needsFilled = GetLimitSettings(slotGroup.Settings).needsFilled;
         if (!needsFilled)
@@ -88,9 +89,21 @@ public class StorageLimits : IExposable
 
         needsFilled = false;
         var cellsList = slotGroup.CellsList;
+        float cellCount = (storage != null ? slotGroup.CellsList.Count * storage.MaxItemsInCell : slotGroup.CellsList.Count);
+
         foreach (var intVec3 in cellsList)
         {
-            if (slotGroup.parent.Map.thingGrid.ThingsListAt(intVec3).Any(t => t.def.EverStorable(false)))
+            // Locate the storable items in this stockpile excluding the storage itself.  Go via intVec3 for multi-stacks
+            List<Thing> thingList = intVec3.GetThingList(slotGroup.parent.Map).FindAll(t => t.def.EverStorable(false));
+
+            // multi-stack storage, with not all stacks filled
+            if (storage != null && thingList.Count < storage.MaxItemsInCell)
+            {
+                needsFilled = true;
+                break;
+            }
+            // single stack storage with an item, or multi-stack with all filled
+            else if(thingList.Count > 0)
             {
                 continue;
             }
@@ -106,10 +119,10 @@ public class StorageLimits : IExposable
 
         //Log.Message("Stockpile full, stop stocking");
         GetLimitSettings(slotGroup.Settings).needsFilled = false;
-        GetLimitSettings(slotGroup.Settings).cellsFilled = cellsList.Count;
+        GetLimitSettings(slotGroup.Settings).cellsFilled = cellCount;
     }
 
-    public static void CheckNeedsFilled(SlotGroup slotGroup, ref bool needsFilled, ref float cellsFilled)
+    public static void CheckNeedsFilled(SlotGroup slotGroup, Building_Storage storage, ref bool needsFilled, ref float cellsFilled)
     {
         if (needsFilled)
         {
@@ -117,7 +130,7 @@ public class StorageLimits : IExposable
         }
 
         cellsFilled -= 1;
-        float totalCells = slotGroup.CellsList.Count;
+        float totalCells = (storage != null ? slotGroup.CellsList.Count * storage.MaxItemsInCell : slotGroup.CellsList.Count);
         if (totalCells == 1 || cellsFilled <= 0 ||
             GetLimitSettings(slotGroup.Settings).cellFillPercentage >= cellsFilled / totalCells)
         {

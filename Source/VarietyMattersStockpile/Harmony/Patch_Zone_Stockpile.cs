@@ -11,7 +11,7 @@ public class Patch_Zone_Stockpile
     public static void Postfix_ReceivedThing(Zone_Stockpile __instance)
     {
         //Log.Message("Stockpile received something");
-        StorageLimits.CheckIfFull(__instance.GetSlotGroup());
+        StorageLimits.CheckIfFull(__instance.GetSlotGroup(), null);
     }
 
     [HarmonyPatch("RemoveCell")]
@@ -19,7 +19,7 @@ public class Patch_Zone_Stockpile
     public static void Postfix_RemoveCell(Zone_Stockpile __instance)
     {
         //Log.Message("Stockpile is smaller, check if it still needs to be filled");
-        StorageLimits.CheckIfFull(__instance.GetSlotGroup());
+        StorageLimits.CheckIfFull(__instance.GetSlotGroup(), null);
     }
 
     [HarmonyPatch("Notify_LostThing")]
@@ -28,7 +28,7 @@ public class Patch_Zone_Stockpile
     {
         //Log.Message("Something removed from stockpile");
         var slotGroup = __instance.GetSlotGroup();
-        StorageLimits.CheckNeedsFilled(slotGroup,
+        StorageLimits.CheckNeedsFilled(slotGroup, null,
             ref StorageLimits.GetLimitSettings(slotGroup.Settings).needsFilled,
             ref StorageLimits.GetLimitSettings(slotGroup.Settings).cellsFilled);
     }

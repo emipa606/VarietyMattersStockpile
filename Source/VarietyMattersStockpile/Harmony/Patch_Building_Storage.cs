@@ -11,7 +11,7 @@ public class Patch_Building_Storage
     public static void Postfix_ReceivedThing(Building_Storage __instance)
     {
         //Log.Message("Stockpile received something");
-        StorageLimits.CheckIfFull(__instance.GetSlotGroup());
+        StorageLimits.CheckIfFull(__instance.GetSlotGroup(), __instance);
     }
 
     [HarmonyPatch("Notify_LostThing")]
@@ -20,7 +20,7 @@ public class Patch_Building_Storage
     {
         //Log.Message("Something removed from stockpile");
         var slotGroup = __instance.GetSlotGroup();
-        StorageLimits.CheckNeedsFilled(slotGroup,
+        StorageLimits.CheckNeedsFilled(slotGroup, __instance,
             ref StorageLimits.GetLimitSettings(slotGroup.Settings).needsFilled,
             ref StorageLimits.GetLimitSettings(slotGroup.Settings).cellsFilled);
     }
