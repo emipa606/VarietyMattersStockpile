@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Reflection;
 using HarmonyLib;
 using RimWorld;
@@ -113,46 +114,64 @@ public class StorageUI
 
         //Refill
         var cellFillPercentage = limitSettings.cellFillPercentage * 100;
-        var numCells = slotGroupParent.AllSlotCellsList().Count;
-        var numCellsStart = Mathf.CeilToInt((100 - cellFillPercentage) / 100 * numCells);
-        var startFilling = limitSettings.needsFilled;
-        string label;
-        if (numCells == 1)
+        var filledCells = 0;
+        var numCells = 0;
+        bool foundBuilding = false;
+
+        foreach(var intVec3 in slotGroupParent.AllSlotCells())
         {
-            Widgets.Label(new Rect(0f, rect.yMin - 105, rect.width, 36f), "VMS.NoEffect".Translate());
+            List<Thing> thingList = intVec3.GetThingList(slotGroupParent.Map);
+            filledCells += thingList.Count(t => t.def.EverStorable(false));
+
+            foreach(var thing in thingList)
+            {
+                if(thing is Building building)
+                {
+                    foundBuilding = true;
+                    numCells += building.MaxItemsInCell;
+                    break;
+                }
+            }
         }
-        else
+
+        if(!foundBuilding)
         {
-            switch (numCellsStart)
-            {
-                case 0:
-                    label = "VMS.FullyStocked".Translate();
-                    break;
-                case 1:
-                    label = "VMS.StartAtOne".Translate();
-                    break;
-                default:
-                    if (numCellsStart == numCells)
-                    {
-                        label = "VMS.RefillWhenEmpty".Translate();
-                    }
-                    else
-                    {
-                        label = "RefillWhenAmount".Translate(numCellsStart.ToString("N0"));
-                    }
+            numCells = slotGroupParent.AllSlotCellsList().Count;
+        }
 
-                    break;
-            }
+        var numCellsStart = Mathf.CeilToInt((100 - cellFillPercentage) / 100 * numCells);
+        var startFilling = numCellsStart == 0 || (numCells - filledCells) >= numCellsStart;
+        string label;
 
-            cellFillPercentage = Widgets.HorizontalSlider(new Rect(0f, rect.yMin - 105, rect.width, 36f),
-                cellFillPercentage, 0f, 100f, false, label);
-            if (cellFillPercentage < 100 && limitSettings.cellsFilled != numCells)
-            {
-                Widgets.CheckboxLabeled(
-                    new Rect(rect.xMin + (rect.width * 0.6f), rect.yMin - 135f, rect.width * .30f, 20f),
-                    "VMS.FillNow".Translate(),
-                    ref startFilling);
-            }
+        switch (numCellsStart)
+        {
+            case 0:
+                label = "VMS.FullyStocked".Translate();
+                break;
+            case 1:
+                label = "VMS.StartAtOne".Translate();
+                break;
+            default:
+                if (numCellsStart == numCells)
+                {
+                    label = "VMS.RefillWhenEmpty".Translate();
+                }
+                else
+                {
+                    label = "VMS.RefillWhenAmount".Translate(numCellsStart.ToString("N0"));
+                }
+
+                break;
+        }
+
+        cellFillPercentage = Widgets.HorizontalSlider(new Rect(0f, rect.yMin - 105, rect.width, 36f),
+            cellFillPercentage, 0f, 100f, false, label);
+        if (cellFillPercentage < 100 && limitSettings.cellsFilled != numCells)
+        {
+            Widgets.CheckboxLabeled(
+                new Rect(rect.xMin + (rect.width * 0.6f), rect.yMin - 135f, rect.width * .30f, 20f),
+                "VMS.FillNow".Translate(),
+                ref startFilling);
         }
 
         //Update Settings
