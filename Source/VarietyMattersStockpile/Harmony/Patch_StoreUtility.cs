@@ -23,7 +23,7 @@ public class Patch_StoreUtility
 
         //Log.Message("Get Limit Settings");
         var limitSettings = StorageLimits.GetLimitSettings(slotGroup.Settings);
-        if (slotGroup.CellsList.Count != 1 && !limitSettings.needsFilled && limitSettings.cellFillPercentage < 1)
+        if (!limitSettings.needsFilled && limitSettings.cellFillPercentage < 1)
         {
             return false;
         }
