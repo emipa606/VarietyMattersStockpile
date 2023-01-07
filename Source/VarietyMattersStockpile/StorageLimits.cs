@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using RimWorld;
 using Verse;
 
@@ -94,16 +93,18 @@ public class StorageLimits : IExposable
         foreach (var intVec3 in cellsList)
         {
             // Locate the storable items in this cell excluding the storage itself
-            List<Thing> thingList = intVec3.GetThingList(slotGroup.parent.Map).FindAll(t => t.def.EverStorable(false));
+            var thingList = intVec3.GetThingList(slotGroup.parent.Map).FindAll(t => t.def.EverStorable(false));
 
             // Looks at available slots only, not partial stacks.  Partial stacks has some complexity
             // as it may never set needsFilled=true if e.g. a meal stack can't be merged as its a
             // different ingredient type
-            if (thingList.Count < maxItemsInCell)
+            if (thingList.Count >= maxItemsInCell)
             {
-                needsFilled = true;
-                break;
+                continue;
             }
+
+            needsFilled = true;
+            break;
         }
 
         if (needsFilled)
@@ -116,7 +117,8 @@ public class StorageLimits : IExposable
         GetLimitSettings(slotGroup.Settings).cellsFilled = totalCells;
     }
 
-    public static void CheckNeedsFilled(SlotGroup slotGroup, int maxItemsInCell, ref bool needsFilled, ref float cellsFilled)
+    public static void CheckNeedsFilled(SlotGroup slotGroup, int maxItemsInCell, ref bool needsFilled,
+        ref float cellsFilled)
     {
         if (needsFilled)
         {
@@ -129,7 +131,7 @@ public class StorageLimits : IExposable
 
         foreach (var intVec3 in cellsList)
         {
-            List<Thing> thingList = intVec3.GetThingList(slotGroup.parent.Map).FindAll(t => t.def.EverStorable(false));
+            var thingList = intVec3.GetThingList(slotGroup.parent.Map).FindAll(t => t.def.EverStorable(false));
             tmpCellsFilled += thingList.Count;
         }
 

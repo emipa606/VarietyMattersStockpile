@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Reflection;
 using HarmonyLib;
 using RimWorld;
@@ -116,31 +115,33 @@ public class StorageUI
         var cellFillPercentage = limitSettings.cellFillPercentage * 100;
         var filledCells = 0;
         var numCells = 0;
-        bool foundBuilding = false;
+        var foundBuilding = false;
 
-        foreach(var intVec3 in slotGroupParent.AllSlotCells())
+        foreach (var intVec3 in slotGroupParent.AllSlotCells())
         {
-            List<Thing> thingList = intVec3.GetThingList(slotGroupParent.Map);
+            var thingList = intVec3.GetThingList(slotGroupParent.Map);
             filledCells += thingList.Count(t => t.def.EverStorable(false));
 
-            foreach(var thing in thingList)
+            foreach (var thing in thingList)
             {
-                if(thing is Building building)
+                if (thing is not Building building)
                 {
-                    foundBuilding = true;
-                    numCells += building.MaxItemsInCell;
-                    break;
+                    continue;
                 }
+
+                foundBuilding = true;
+                numCells += building.MaxItemsInCell;
+                break;
             }
         }
 
-        if(!foundBuilding)
+        if (!foundBuilding)
         {
             numCells = slotGroupParent.AllSlotCellsList().Count;
         }
 
         var numCellsStart = Mathf.CeilToInt((100 - cellFillPercentage) / 100 * numCells);
-        var startFilling = numCellsStart == 0 || (numCells - filledCells) >= numCellsStart;
+        var startFilling = numCellsStart == 0 || numCells - filledCells >= numCellsStart;
         string label;
 
         switch (numCellsStart)
@@ -164,7 +165,7 @@ public class StorageUI
                 break;
         }
 
-        cellFillPercentage = Widgets.HorizontalSlider(new Rect(0f, rect.yMin - 105, rect.width, 36f),
+        cellFillPercentage = Widgets.HorizontalSlider_NewTemp(new Rect(0f, rect.yMin - 105, rect.width, 36f),
             cellFillPercentage, 0f, 100f, false, label);
         if (cellFillPercentage < 100 && limitSettings.cellsFilled != numCells)
         {
