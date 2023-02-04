@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+  <VMS.CurrentModVersion>模組版本: {0}</VMS.CurrentModVersion>
+  <VMS.NoEffect>1個單元格始終保持充足</VMS.NoEffect>
+  <VMS.FullyStocked>始終保持充足</VMS.FullyStocked>
+  <VMS.StartAtOne>當有1個可用單元格時，立刻補充</VMS.StartAtOne>
+  <VMS.RefillWhenEmpty>用完後開始補充</VMS.RefillWhenEmpty>
+  <VMS.RefillWhenAmount>當 {0} 個可用單元格時開始補充</VMS.RefillWhenAmount>
+  <VMS.FillNow>立即補充</VMS.FillNow>
+  <VMS.StackSize>堆疊大小</VMS.StackSize>
+  <VMS.Duplicates>重複數</VMS.Duplicates>
+  <VMS.SingleDuplicates>單堆物品可以重複： </VMS.SingleDuplicates>
+  <VMS.CheckReservations>限制重複時檢查保留： </VMS.CheckReservations>
+
+</LanguageData>
