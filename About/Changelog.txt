@@ -1,5 +1,8 @@
 # Changelog for VarietyMattersStockpile
 
+1.4.3 - Chinese translation added, thanks shiuanyue
+
+
 1.4.2 - Fixes to the refill thresholds to accomodate the multi-stack shelving in v1.4. Thanks leehuk!
 
 
