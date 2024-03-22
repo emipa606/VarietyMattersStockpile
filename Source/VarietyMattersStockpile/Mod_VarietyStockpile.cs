@@ -17,8 +17,7 @@ public class Mod_VarietyStockpile : Mod
         harmony.PatchAll(Assembly.GetExecutingAssembly());
         GetSettings<ModSettings_VarietyStockpile>();
         currentVersion =
-            VersionFromManifest.GetVersionFromModMetaData(
-                ModLister.GetActiveModWithIdentifier("Mlie.VarietyMattersStockpile"));
+            VersionFromManifest.GetVersionFromModMetaData(content.ModMetaData);
     }
 
     public override void DoSettingsWindowContents(Rect inRect)

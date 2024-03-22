@@ -56,7 +56,7 @@ public class Patch_StoreUtility
 
     public static bool StackSpaceAvailable(ref bool firstStack, int sizeLimit, IntVec3 c, Map map, Thing thing)
     {
-        //Log.Message(thing.Label + "'s stack size limit is " + sizeLimit);
+        //Log.Message (thing.Label + "'s stack size limit is " + sizeLimit);
         var storedItems = map.thingGrid.ThingsListAt(c);
         var numStacks = 0;
         foreach (var thing2 in storedItems)

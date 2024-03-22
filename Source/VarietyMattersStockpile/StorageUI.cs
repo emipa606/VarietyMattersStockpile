@@ -1,5 +1,4 @@
-﻿using System;
-using System.Reflection;
+﻿using System.Reflection;
 using HarmonyLib;
 using RimWorld;
 using UnityEngine;
@@ -11,6 +10,7 @@ namespace VarietyMattersStockpile;
 public class StorageUI
 {
     private const int max = 9999999;
+    private const float minY = 85f;
 
     //Stack Limits
     private static string dupBuffer = "";
@@ -41,7 +41,7 @@ public class StorageUI
             return;
         }
 
-        rect.yMin += 55f;
+        rect.yMin += minY;
     }
 
     [HarmonyPatch(typeof(ThingFilterUI), "DoThingFilterConfigWindow")]
@@ -56,7 +56,7 @@ public class StorageUI
 
         var storeSettingsParent = (IStoreSettingsParent)typeof(ITab_Storage)
             .GetProperty("SelStoreSettingsParent", BindingFlags.NonPublic | BindingFlags.Instance)
-            ?.GetGetMethod(true).Invoke(tab, Array.Empty<object>());
+            ?.GetGetMethod(true).Invoke(tab, []);
         var settings = storeSettingsParent?.GetStoreSettings();
         if (settings?.owner is not ISlotGroupParent slotGroupParent)
         {
@@ -69,7 +69,7 @@ public class StorageUI
         //Duplicates
         var dupLimit = limitSettings.dupStackLimit;
         var limitDuplicates = dupLimit != -1;
-        Widgets.CheckboxLabeled(new Rect(rect.xMin, rect.yMin - 75f, (rect.width / 2) - 45f, 20f),
+        Widgets.CheckboxLabeled(new Rect(rect.xMin, rect.yMin - minY, (rect.width / 2) - 45f, 20f),
             "VMS.Duplicates".Translate(),
             ref limitDuplicates);
         if (limitDuplicates)
@@ -80,7 +80,7 @@ public class StorageUI
             }
 
             Widgets.TextFieldNumeric(
-                new Rect(rect.xMin + (rect.width / 2) - 40f, rect.yMin - 75f, (rect.width / 2) - 115f, 20f),
+                new Rect(rect.xMin + (rect.width / 2) - 40f, rect.yMin - minY, (rect.width / 2) - 115f, 20f),
                 ref dupLimit, ref dupBuffer, 1, max);
         }
         else
@@ -92,7 +92,7 @@ public class StorageUI
         var sizeLimit = limitSettings.stackSizeLimit;
         var hasLimit = sizeLimit != -1;
         Widgets.CheckboxLabeled(
-            new Rect(rect.xMin + (rect.width / 2) - 5f, rect.yMin - 75f, (rect.width / 2) - 45f, 20f),
+            new Rect(rect.xMin + (rect.width / 2) - 5f, rect.yMin - minY, (rect.width / 2) - 45f, 20f),
             "VMS.StackSize".Translate(),
             ref hasLimit);
         if (hasLimit)
@@ -103,7 +103,7 @@ public class StorageUI
             }
 
             Widgets.TextFieldNumeric(
-                new Rect(rect.xMin + (rect.width / 2) + 95f, rect.yMin - 75f, (rect.width / 2) - 105f, 20f),
+                new Rect(rect.xMin + (rect.width / 2) + 95f, rect.yMin - minY, (rect.width / 2) - 105f, 20f),
                 ref sizeLimit, ref sizeBuffer, 1, max);
         }
         else
@@ -153,24 +153,19 @@ public class StorageUI
                 label = "VMS.StartAtOne".Translate();
                 break;
             default:
-                if (numCellsStart == numCells)
-                {
-                    label = "VMS.RefillWhenEmpty".Translate();
-                }
-                else
-                {
-                    label = "VMS.RefillWhenAmount".Translate(numCellsStart.ToString("N0"));
-                }
+                label = numCellsStart == numCells
+                    ? "VMS.RefillWhenEmpty".Translate()
+                    : "VMS.RefillWhenAmount".Translate(numCellsStart.ToString("N0"));
 
                 break;
         }
 
-        cellFillPercentage = Widgets.HorizontalSlider_NewTemp(new Rect(0f, rect.yMin - 105, rect.width, 36f),
+        cellFillPercentage = Widgets.HorizontalSlider(new Rect(0f, rect.yMin - minY - 40, rect.width, 36f),
             cellFillPercentage, 0f, 100f, false, label);
         if (cellFillPercentage < 100 && limitSettings.cellsFilled != numCells)
         {
             Widgets.CheckboxLabeled(
-                new Rect(rect.xMin + (rect.width * 0.6f), rect.yMin - 135f, rect.width * .30f, 20f),
+                new Rect(rect.xMin + (rect.width * 0.6f), rect.yMin - minY - 70, rect.width * .30f, 30f),
                 "VMS.FillNow".Translate(),
                 ref startFilling);
         }

@@ -9,7 +9,7 @@ namespace VarietyMattersStockpile;
 public static class Patch_Haul
 {
     // Pawns will never overfill size limited stacks but can't haul multiple stacks.
-    public static void Postfix(ref Job __result, Pawn p, Thing t, IntVec3 storeCell, bool fitInStoreCell)
+    public static void Postfix(ref Job __result, Pawn p, Thing t, IntVec3 storeCell)
     {
         var curLimit = StorageLimits.CalculateSizeLimit(t);
         var newLimit = StorageLimits.CalculateSizeLimit(p.Map.haulDestinationManager.SlotGroupAt(storeCell));

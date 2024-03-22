@@ -41,9 +41,9 @@ internal class Patch_Thing
                 if (__instance.CanStackWith(other))
                 {
                     if (ThingUtility.TryAbsorbStackNumToTake(__instance, other, respectStackLimit) <= 0)
-                    { 
-                        __result = false; 
-                        return false; 
+                    {
+                        __result = false;
+                        return false;
                     }
                 }
             }

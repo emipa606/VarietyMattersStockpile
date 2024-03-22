@@ -30,24 +30,12 @@ public class StorageLimits : IExposable
 
     public static StorageLimits GetLimitSettings(StorageSettings settings)
     {
-        if (limitSettings.ContainsKey(settings))
-        {
-            return limitSettings[settings];
-        }
-
-        return new StorageLimits();
+        return limitSettings.TryGetValue(settings, out var setting) ? setting : new StorageLimits();
     }
 
     public static void SetLimitSettings(StorageSettings settings, StorageLimits newSettings)
     {
-        if (limitSettings.ContainsKey(settings))
-        {
-            limitSettings[settings] = newSettings;
-        }
-        else
-        {
-            limitSettings.Add(settings, newSettings);
-        }
+        limitSettings[settings] = newSettings;
     }
 
     public static int CalculateSizeLimit(Thing t)
@@ -96,7 +84,7 @@ public class StorageLimits : IExposable
             var thingList = intVec3.GetThingList(slotGroup.parent.Map).FindAll(t => t.def.EverStorable(false));
 
             // Looks at available slots only, not partial stacks.  Partial stacks has some complexity
-            // as it may never set needsFilled=true if e.g. a meal stack can't be merged as its a
+            // as it may never set needsFilled=true if e.g. a meal stack can't be merged as it's a
             // different ingredient type
             if (thingList.Count >= maxItemsInCell)
             {
@@ -160,7 +148,7 @@ public class StorageLimits : IExposable
                 {
                     if (!slotGroup.parent.Map.thingGrid.ThingsListAt(cell).Any(t => t.def.EverStorable(false)))
                     {
-                        needsFilled = true; 
+                        needsFilled = true;
                         break;
                     }
                     if (slotGroup.parent is ThingWithComps)
