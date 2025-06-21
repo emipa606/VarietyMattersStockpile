@@ -7,8 +7,7 @@ namespace VarietyMattersStockpile;
 [HarmonyPatch(typeof(StorageSettings), nameof(StorageSettings.ExposeData))]
 public class StorageSettings_ExposeData
 {
-    [HarmonyPostfix]
-    public static void ExposeData(StorageSettings __instance)
+    public static void Postfix(StorageSettings __instance)
     {
         var storageLimits = StorageLimits.GetLimitSettings(__instance);
         Scribe_Deep.Look(ref storageLimits, "limitSettings");

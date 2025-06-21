@@ -5,8 +5,8 @@ using Verse.AI;
 
 namespace VarietyMattersStockpile;
 
-[HarmonyPatch(typeof(HaulAIUtility), "HaulToCellStorageJob")]
-public static class Patch_Haul
+[HarmonyPatch(typeof(HaulAIUtility), nameof(HaulAIUtility.HaulToCellStorageJob))]
+public static class HaulAIUtility_HaulToCellStorageJob
 {
     // Pawns will never overfill size limited stacks but can't haul multiple stacks.
     public static void Postfix(ref Job __result, Pawn p, Thing t, IntVec3 storeCell)

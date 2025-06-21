@@ -1,4 +1,4 @@
-# VarietyMattersStockpile
+# [Variety Matters Stockpile (Continued)](https://steamcommunity.com/sharedfiles/filedetails/?id=2585724597)
 
 ![Image](https://i.imgur.com/buuPQel.png)
 
@@ -8,7 +8,6 @@ https://steamcommunity.com/sharedfiles/filedetails/?id=2266068546
 - Chinese translation added, thanks shiuanyue
 
 ![Image](https://i.imgur.com/pufA0kM.png)
-
 	
 ![Image](https://i.imgur.com/Z4GOv8H.png)
 
@@ -16,7 +15,7 @@ https://steamcommunity.com/sharedfiles/filedetails/?id=2266068546
 
 Adds several new features to stockpile filters for added control over what to store, how much to store, and when to fill a stockpile. 
 
-Created for use with https://steamcommunity.com/sharedfiles/filedetails/?id=2207657844]Variety Matters, you can now create a stockpile near your cook that will hold small stacks of different ingredients, increasing the diversity of ingredients used in meals. 
+Created for use with [Variety Matters](https://steamcommunity.com/sharedfiles/filedetails/?id=2207657844), you can now create a stockpile near your cook that will hold small stacks of different ingredients, increasing the diversity of ingredients used in meals. 
 
 For vanilla uses, you can create a food shelf in your dining room that won't refill until the shelves are empty, saving hauling time and helping meals get eaten before they rot; or give your pawns' closets with only 1 of each type of clothing. 
 
@@ -71,11 +70,11 @@ Pawns ignore the stack limit when placing stacks from a recently completed bill,
 # Credits:
 
 	This mod borrows heavily from the Storage Stack Limit and Storage Hysteresis mods.
-	https://steamcommunity.com/sharedfiles/filedetails/?id=2015532615]Sellophane's Remade and Updated Stockpile Stack Limit
-	https://steamcommunity.com/sharedfiles/filedetails/?id=1852323982]Darksider's Version 
-	https://steamcommunity.com/sharedfiles/filedetails/?id=1651076103]Original Stack Limit
-	https://steamcommunity.com/sharedfiles/filedetails/?id=726479594]RimWorld Search Agency
-	https://steamcommunity.com/sharedfiles/filedetails/?id=2003354028]Satisfied Storage	https://steamcommunity.com/sharedfiles/filedetails/?id=784324350]Original Storage Hysteresis
+	[Sellophane's Remade and Updated Stockpile Stack Limit](https://steamcommunity.com/sharedfiles/filedetails/?id=2015532615)
+	[Darksider's Version](https://steamcommunity.com/sharedfiles/filedetails/?id=1852323982) 
+	[Original Stack Limit](https://steamcommunity.com/sharedfiles/filedetails/?id=1651076103)
+	[RimWorld Search Agency](https://steamcommunity.com/sharedfiles/filedetails/?id=726479594)
+	[Satisfied Storage](https://steamcommunity.com/sharedfiles/filedetails/?id=2003354028)	[Original Storage Hysteresis](https://steamcommunity.com/sharedfiles/filedetails/?id=784324350)
 
 ![Image](https://i.imgur.com/PwoNOj4.png)
 
@@ -83,13 +82,12 @@ Pawns ignore the stack limit when placing stacks from a recently completed bill,
 
 -  See if the the error persists if you just have this mod and its requirements active.
 -  If not, try adding your other mods until it happens again.
--  Post your error-log using https://steamcommunity.com/workshop/filedetails/?id=818773962]HugsLib or the standalone https://steamcommunity.com/sharedfiles/filedetails/?id=2873415404]Uploader and command Ctrl+F12
+-  Post your error-log using [HugsLib](https://steamcommunity.com/workshop/filedetails/?id=818773962) or the standalone [Uploader](https://steamcommunity.com/sharedfiles/filedetails/?id=2873415404) and command Ctrl+F12
 -  For best support, please use the Discord-channel for error-reporting.
 -  Do not report errors by making a discussion-thread, I get no notification of that.
 -  If you have the solution for a problem, please post it to the GitHub repository.
--  Use https://github.com/RimSort/RimSort/releases/latest]RimSort to sort your mods
+-  Use [RimSort](https://github.com/RimSort/RimSort/releases/latest) to sort your mods
 
+ 
 
-
-https://steamcommunity.com/sharedfiles/filedetails/changelog/2585724597]![Image](https://img.shields.io/github/v/release/emipa606/VarietyMattersStockpile?label=latest%20version&style=plastic&color=9f1111&labelColor=black)
-
+[![Image](https://img.shields.io/github/v/release/emipa606/VarietyMattersStockpile?label=latest%20version&style=plastic&color=9f1111&labelColor=black)](https://steamcommunity.com/sharedfiles/filedetails/changelog/2585724597) | tags: stockpile,  management

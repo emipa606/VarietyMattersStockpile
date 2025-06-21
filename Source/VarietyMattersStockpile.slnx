@@ -1,0 +1,6 @@
+<Solution>
+  <Configurations>
+    <BuildType Name="Release" />
+  </Configurations>
+  <Project Path="VarietyMattersStockpile/VarietyMattersStockpile.csproj" />
+</Solution>

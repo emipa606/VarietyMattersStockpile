@@ -6,49 +6,23 @@ using Verse;
 
 namespace VarietyMattersStockpile;
 
-[HarmonyPatch]
-public class StorageUI
+[HarmonyPatch(typeof(ThingFilterUI), nameof(ThingFilterUI.DoThingFilterConfigWindow))]
+public class ThingFilterUI_DoThingFilterConfigWindow
 {
-    private const int max = 9999999;
-    private const float minY = 85f;
-
-    //Stack Limits
-    private static string dupBuffer = "";
-    private static string sizeBuffer = "";
-    private static StorageSettings oldSettings;
-
-    private static ITab_Storage currentTab;
-
-    [HarmonyPatch(typeof(ITab_Storage), "FillTab")]
-    public static void Prefix(ITab_Storage __instance)
+    public static void Prefix(ref Rect rect)
     {
-        currentTab = __instance;
-    }
-
-    [HarmonyPatch(typeof(ITab_Storage), "FillTab")]
-    public static void Postfix()
-    {
-        currentTab = null;
-    }
-
-    [HarmonyPatch(typeof(ThingFilterUI), "DoThingFilterConfigWindow")]
-    [HarmonyPrefix]
-    public static void ExpandWindow(ref Rect rect)
-    {
-        var tab = currentTab;
+        var tab = Mod_VarietyStockpile.currentTab;
         if (tab == null)
         {
             return;
         }
 
-        rect.yMin += minY;
+        rect.yMin += Mod_VarietyStockpile.minY;
     }
 
-    [HarmonyPatch(typeof(ThingFilterUI), "DoThingFilterConfigWindow")]
-    [HarmonyPostfix]
-    public static void AddFilters(ref Rect rect)
+    public static void Postfix(ref Rect rect)
     {
-        var tab = currentTab;
+        var tab = Mod_VarietyStockpile.currentTab;
         if (tab == null)
         {
             return;
@@ -64,24 +38,24 @@ public class StorageUI
         }
 
         var limitSettings = StorageLimits.GetLimitSettings(settings);
-        //Text.Font = GameFont.Tiny;
 
         //Duplicates
-        var dupLimit = limitSettings.dupStackLimit;
+        var dupLimit = limitSettings.DupStackLimit;
         var limitDuplicates = dupLimit != -1;
-        Widgets.CheckboxLabeled(new Rect(rect.xMin, rect.yMin - minY, (rect.width / 2) - 45f, 20f),
+        Widgets.CheckboxLabeled(new Rect(rect.xMin, rect.yMin - Mod_VarietyStockpile.minY, (rect.width / 2) - 45f, 20f),
             "VMS.Duplicates".Translate(),
             ref limitDuplicates);
         if (limitDuplicates)
         {
-            if (oldSettings != settings)
+            if (Mod_VarietyStockpile.oldSettings != settings)
             {
-                dupBuffer = dupLimit.ToString();
+                Mod_VarietyStockpile.dupBuffer = dupLimit.ToString();
             }
 
             Widgets.TextFieldNumeric(
-                new Rect(rect.xMin + (rect.width / 2) - 40f, rect.yMin - minY, (rect.width / 2) - 115f, 20f),
-                ref dupLimit, ref dupBuffer, 1, max);
+                new Rect(rect.xMin + (rect.width / 2) - 40f, rect.yMin - Mod_VarietyStockpile.minY,
+                    (rect.width / 2) - 115f, 20f),
+                ref dupLimit, ref Mod_VarietyStockpile.dupBuffer, 1, Mod_VarietyStockpile.max);
         }
         else
         {
@@ -89,22 +63,24 @@ public class StorageUI
         }
 
         //Stack Limit
-        var sizeLimit = limitSettings.stackSizeLimit;
+        var sizeLimit = limitSettings.StackSizeLimit;
         var hasLimit = sizeLimit != -1;
         Widgets.CheckboxLabeled(
-            new Rect(rect.xMin + (rect.width / 2) - 5f, rect.yMin - minY, (rect.width / 2) - 45f, 20f),
+            new Rect(rect.xMin + (rect.width / 2) - 5f, rect.yMin - Mod_VarietyStockpile.minY, (rect.width / 2) - 45f,
+                20f),
             "VMS.StackSize".Translate(),
             ref hasLimit);
         if (hasLimit)
         {
-            if (oldSettings != settings)
+            if (Mod_VarietyStockpile.oldSettings != settings)
             {
-                sizeBuffer = sizeLimit.ToString();
+                Mod_VarietyStockpile.sizeBuffer = sizeLimit.ToString();
             }
 
             Widgets.TextFieldNumeric(
-                new Rect(rect.xMin + (rect.width / 2) + 95f, rect.yMin - minY, (rect.width / 2) - 105f, 20f),
-                ref sizeLimit, ref sizeBuffer, 1, max);
+                new Rect(rect.xMin + (rect.width / 2) + 95f, rect.yMin - Mod_VarietyStockpile.minY,
+                    (rect.width / 2) - 105f, 20f),
+                ref sizeLimit, ref Mod_VarietyStockpile.sizeBuffer, 1, Mod_VarietyStockpile.max);
         }
         else
         {
@@ -112,7 +88,7 @@ public class StorageUI
         }
 
         //Refill
-        var cellFillPercentage = limitSettings.cellFillPercentage * 100;
+        var cellFillPercentage = limitSettings.CellFillPercentage * 100;
         var filledCells = 0;
         var numCells = 0;
         var foundBuilding = false;
@@ -160,23 +136,24 @@ public class StorageUI
                 break;
         }
 
-        cellFillPercentage = Widgets.HorizontalSlider(new Rect(0f, rect.yMin - minY - 40, rect.width, 36f),
+        cellFillPercentage = Widgets.HorizontalSlider(
+            new Rect(0f, rect.yMin - Mod_VarietyStockpile.minY - 40, rect.width, 36f),
             cellFillPercentage, 0f, 100f, false, label);
-        if (cellFillPercentage < 100 && limitSettings.cellsFilled != numCells)
+        if (cellFillPercentage < 100 && limitSettings.CellsFilled != numCells)
         {
             Widgets.CheckboxLabeled(
-                new Rect(rect.xMin + (rect.width * 0.6f), rect.yMin - minY - 70, rect.width * .30f, 30f),
+                new Rect(rect.xMin + (rect.width * 0.6f), rect.yMin - Mod_VarietyStockpile.minY - 70, rect.width * .30f,
+                    30f),
                 "VMS.FillNow".Translate(),
                 ref startFilling);
         }
 
         //Update Settings
-        oldSettings = settings;
-        limitSettings.dupStackLimit = dupLimit;
-        limitSettings.stackSizeLimit = sizeLimit;
-        limitSettings.cellFillPercentage = cellFillPercentage / 100f;
-        limitSettings.needsFilled = startFilling;
+        Mod_VarietyStockpile.oldSettings = settings;
+        limitSettings.DupStackLimit = dupLimit;
+        limitSettings.StackSizeLimit = sizeLimit;
+        limitSettings.CellFillPercentage = cellFillPercentage / 100f;
+        limitSettings.NeedsFilled = startFilling;
         StorageLimits.SetLimitSettings(settings, limitSettings);
-        //Log.Message("Set stack size limit of " + limitSettings.stackSizeLimit);
     }
 }

@@ -4,12 +4,12 @@ namespace VarietyMattersStockpile;
 
 internal class ModSettings_VarietyStockpile : ModSettings
 {
-    public static bool limitNonStackables = true;
-    public static bool checkReservations = true;
+    public static bool LimitNonStackables = true;
+    public static bool CheckReservations = true;
 
     public override void ExposeData()
     {
-        Scribe_Values.Look(ref limitNonStackables, "limitNonStackables", true);
-        Scribe_Values.Look(ref checkReservations, "checkReservations", true);
+        Scribe_Values.Look(ref LimitNonStackables, "limitNonStackables", true);
+        Scribe_Values.Look(ref CheckReservations, "checkReservations", true);
     }
 }

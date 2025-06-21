@@ -5,8 +5,7 @@ namespace VarietyMattersStockpile;
 
 public class TrackLimitSettings
 {
-    private static readonly Dictionary<StorageSettings, StorageLimits> limitSettings =
-        new Dictionary<StorageSettings, StorageLimits>();
+    private static readonly Dictionary<StorageSettings, StorageLimits> limitSettings = new();
 
     public static StorageLimits GetLimitSettings(StorageSettings settings)
     {
