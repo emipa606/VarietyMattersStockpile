@@ -8,11 +8,11 @@ public class ITab_Storage_FillTab
 {
     public static void Prefix(ITab_Storage __instance)
     {
-        Mod_VarietyStockpile.currentTab = __instance;
+        Mod_VarietyStockpile.CurrentTab = __instance;
     }
 
     public static void Postfix()
     {
-        Mod_VarietyStockpile.currentTab = null;
+        Mod_VarietyStockpile.CurrentTab = null;
     }
 }

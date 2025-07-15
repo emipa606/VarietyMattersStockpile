@@ -1,5 +1,8 @@
 # Changelog for VarietyMattersStockpile
 
+1.6.1 - Fix for ui issues, thanks stewbyte!
+
+
 1.6.0 - Mod updated for 1.6 and passed autotests
 
 

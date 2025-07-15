@@ -3,10 +3,16 @@
   "CanAdd": "0",
   "CanRemove": "0",
   "PreviewVersion": "1.6",
-  "LastXmlCleaning": "2025-06-21T20:14:13.9278346+02:00",
+  "LastXmlCleaning": "2025-07-15T21:31:10.0730067+02:00",
   "SocialImageSet": true,
   "SearchTags": [
     "stockpile",
     " management"
-  ]
+  ],
+  "Patches": false,
+  "Defs": false,
+  "Assemblies": true,
+  "LinesOfCode": 26319,
+  "LinesOfXML": 0,
+  "CodeBaseSize": 70
 }

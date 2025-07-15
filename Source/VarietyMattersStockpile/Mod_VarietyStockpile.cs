@@ -9,16 +9,16 @@ namespace VarietyMattersStockpile;
 
 public class Mod_VarietyStockpile : Mod
 {
-    public const int max = 9999999;
-    public const float minY = 85f;
+    public const int Max = 9999999;
+    public const float MinY = 85f;
     private static string currentVersion;
 
     //Stack Limits
-    public static string dupBuffer = "";
-    public static string sizeBuffer = "";
-    public static StorageSettings oldSettings;
+    public static string DupBuffer = "";
+    public static string SizeBuffer = "";
+    public static StorageSettings OldSettings;
 
-    public static ITab_Storage currentTab;
+    public static ITab_Storage CurrentTab;
 
     public Mod_VarietyStockpile(ModContentPack content) : base(content)
     {
