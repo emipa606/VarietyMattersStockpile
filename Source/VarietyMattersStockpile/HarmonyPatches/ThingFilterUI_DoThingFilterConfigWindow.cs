@@ -37,14 +37,21 @@ public class ThingFilterUI_DoThingFilterConfigWindow
             return;
         }
 
+        var baseFont = Text.Font;
         var limitSettings = StorageLimits.GetLimitSettings(settings);
 
         //Duplicates
         var dupLimit = limitSettings.DupStackLimit;
         var limitDuplicates = dupLimit != -1;
-        Widgets.CheckboxLabeled(new Rect(rect.xMin, rect.yMin - Mod_VarietyStockpile.MinY, (rect.width / 2) - 45f, 20f),
-            "VMS.Duplicates".Translate(),
-            ref limitDuplicates);
+        var duplicatesRect = new Rect(rect.xMin, rect.yMin - Mod_VarietyStockpile.MinY, (rect.width / 2) - 45f, 20f);
+        var duplicatesLabel = "VMS.Duplicates".Translate();
+        if (Text.CalcSize(duplicatesLabel).x > duplicatesRect.width - duplicatesRect.height)
+        {
+            Text.Font = GameFont.Tiny;
+        }
+
+        Widgets.CheckboxLabeled(duplicatesRect, duplicatesLabel, ref limitDuplicates);
+        Text.Font = baseFont;
         if (limitDuplicates)
         {
             if (Mod_VarietyStockpile.OldSettings != settings)
@@ -75,11 +82,17 @@ public class ThingFilterUI_DoThingFilterConfigWindow
         //Stack Limit
         var sizeLimit = limitSettings.StackSizeLimit;
         var hasLimit = sizeLimit != -1;
-        Widgets.CheckboxLabeled(
-            new Rect(rect.xMin + (rect.width / 2) - 5f, rect.yMin - Mod_VarietyStockpile.MinY, (rect.width / 2) - 45f,
-                20f),
-            "VMS.StackSize".Translate(),
-            ref hasLimit);
+        var stackSizeRect = new Rect(rect.xMin + (rect.width / 2) - 5f, rect.yMin - Mod_VarietyStockpile.MinY,
+            (rect.width / 2) - 45f, 20f);
+        var stackSizeLabel = "VMS.StackSize".Translate();
+        if (Text.CalcSize(stackSizeLabel).x > stackSizeRect.width - stackSizeRect.height)
+        {
+            Text.Font = GameFont.Tiny;
+        }
+
+        Widgets.CheckboxLabeled(stackSizeRect, stackSizeLabel, ref hasLimit);
+        Text.Font = baseFont;
+
         if (hasLimit)
         {
             if (Mod_VarietyStockpile.OldSettings != settings)
@@ -138,18 +151,31 @@ public class ThingFilterUI_DoThingFilterConfigWindow
             startAt == 1 ? "VMS.StartAtOne".Translate() :
             startAt == total ? "VMS.RefillWhenEmpty".Translate() :
             "VMS.RefillWhenAmount".Translate(startAt.ToString("N0"));
+        var cellFillRect = new Rect(0f, rect.yMin - Mod_VarietyStockpile.MinY - 40f, rect.width, 36f);
+        if (Text.CalcHeight(label, cellFillRect.width) > 30)
+        {
+            Text.Font = GameFont.Tiny;
+        }
 
-        cellFillPct =
-            Widgets.HorizontalSlider(new Rect(0f, rect.yMin - Mod_VarietyStockpile.MinY - 40f, rect.width, 36f),
-                cellFillPct, 0f, 100f, false, label);
+        cellFillPct = Widgets.HorizontalSlider(cellFillRect.BottomHalf(), cellFillPct, 0f, 100f);
+        var anchor = Text.Anchor;
+        Text.Anchor = TextAnchor.UpperCenter;
+        Widgets.Label(cellFillRect, label);
+        Text.Font = baseFont;
+        Text.Anchor = anchor;
 
         if (cellFillPct < 100f && limitSettings.CellsFilled != total)
         {
-            Widgets.CheckboxLabeled(
-                new Rect(rect.xMin + (rect.width * 0.6f), rect.yMin - Mod_VarietyStockpile.MinY - 70f,
-                    rect.width * 0.30f, 30f),
-                "VMS.FillNow".Translate(),
-                ref limitSettings.NeedsFilled);
+            var fillNowText = "VMS.FillNow".Translate();
+            var fillNowRect = new Rect(rect.xMin + (rect.width * 0.6f), rect.yMin - Mod_VarietyStockpile.MinY - 70f,
+                rect.width * 0.30f, 30f);
+            if (Text.CalcSize(fillNowText).x > fillNowRect.width - fillNowRect.height)
+            {
+                Text.Font = GameFont.Tiny;
+            }
+
+            Widgets.CheckboxLabeled(fillNowRect, fillNowText, ref limitSettings.NeedsFilled);
+            Text.Font = baseFont;
         }
 
         //Update Settings
