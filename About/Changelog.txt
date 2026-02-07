@@ -1,5 +1,8 @@
 # Changelog for VarietyMattersStockpile
 
+1.6.3 - Removed russian translation
+
+
 1.6.2 - Should work better for languages with longer text as well as english for large stockpiles
 
 
